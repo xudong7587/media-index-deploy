@@ -9,9 +9,20 @@ MediaIndex 是面向个人 NAS 的**自托管网盘媒体自动化中心**：以
 ![Docker](https://img.shields.io/badge/deploy-Docker-2496ed?style=flat-square)
 ![License](https://img.shields.io/badge/license-GPL--3.0-111827?style=flat-square)
 
-本仓库提供 MediaIndex 的公开部署说明与 Docker Compose。使用镜像 `ghcr.io/xudong7587/media-index:latest` 获取最新正式版；需要固定版本时，可改用已发布的镜像版本标签，例如 `1.0.11`。
+本仓库提供 MediaIndex 的公开部署说明与 Docker Compose。使用镜像 `ghcr.io/xudong7587/media-index:latest` 获取最新正式版；需要固定版本时，可改用已发布的镜像版本标签，例如 `1.0.16`。
 
-1.0.11 增加番号演员姓名搜索、共用人物详情与主演头像；演员追更支持日期起点、默认单体、停止并删除与任务详情，海报墙展示角标、清晰度和入库时间，并重新整理通知与交互设置。
+1.0.16 增加演员待核对处理入口、完整目录统计和可排序海报墙。可查看原因、重新搜索、确认或跳过，汇总通知直达对应演员；默认展示单体与待核验作品。
+
+📦 **[最新 Release 与 Compose 下载](https://github.com/xudong7587/media-index-deploy/releases/latest)** · 🐳 **[latest 镜像入口](https://github.com/users/xudong7587/packages/container/package/media-index?tag=latest)** · 📝 **[更新日志](CHANGELOG.md)**
+
+```sh
+# 最新正式版
+docker pull ghcr.io/xudong7587/media-index:latest
+# 固定到本版
+docker pull ghcr.io/xudong7587/media-index:1.0.16
+```
+
+镜像支持 Linux amd64 / arm64，Docker 自动选择对应架构。Release 提供镜像入口和部署文件；镜像通过 Docker 拉取，不是可直接执行的安装包。
 
 🐳 **[Docker Compose 部署](docker-compose.yaml)** · 📖 **[首次配置](#第一次使用建议)** · 🔄 **[更新与备份](#更新备份与许可)** · 📜 **[第三方组件声明](THIRD_PARTY_NOTICES.md)**
 
