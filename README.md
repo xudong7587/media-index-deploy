@@ -11,7 +11,7 @@ MediaIndex 是面向个人 NAS 的**自托管网盘媒体自动化中心**：以
 
 本仓库提供 MediaIndex 的公开部署说明与 Docker Compose。使用镜像 `ghcr.io/xudong7587/media-index:latest` 获取最新正式版；需要固定版本时，可改用已发布的镜像版本标签，例如 `1.0.23`。
 
-1.0.23 修复演员旧任务空转与恢复：115 完整分页查任务、区分任务丢失和查询失败、缓存核验后有界重试或自动换源；支持 ch/-c/-u/-uc 后缀及连续分段。OFJE 和出演超过 5 人的作品不再追更。
+1.0.23 修复演员旧任务空转与恢复：115 完整分页查任务、区分任务丢失和查询失败、缓存核验后有界重试或自动换源；支持 ch/-c/-u/-uc 后缀及连续分段。OFJE 和出演超过 5 人的作品不再追更；旧回执按请求及尝试编号精确匹配。
 
 📦 **[最新 Release 与 Compose 下载](https://github.com/xudong7587/media-index-deploy/releases/latest)** · 🐳 **[latest 镜像入口](https://github.com/users/xudong7587/packages/container/package/media-index?tag=latest)** · 📝 **[更新日志](CHANGELOG.md)**
 
