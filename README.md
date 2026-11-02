@@ -9,9 +9,9 @@ MediaIndex 是面向个人 NAS 的**自托管网盘媒体自动化中心**：以
 ![Docker](https://img.shields.io/badge/deploy-Docker-2496ed?style=flat-square)
 ![License](https://img.shields.io/badge/license-GPL--3.0-111827?style=flat-square)
 
-本仓库提供 MediaIndex 的公开部署说明与 Docker Compose。使用镜像 `ghcr.io/xudong7587/media-index:latest` 获取最新正式版；需要固定版本时，可改用已发布的镜像版本标签，例如 `1.0.24`。
+本仓库提供 MediaIndex 的公开部署说明与 Docker Compose。使用镜像 `ghcr.io/xudong7587/media-index:latest` 获取最新正式版；需要固定版本时，可改用已发布的镜像版本标签，例如 `1.0.25`。
 
-1.0.24 修复多演员排队丢失“立即检查”意图，以及 extrafanart 图片目录误阻止已有视频比对；入库失败显示脱敏后的具体原因。升级后刷新页面，再点演员“立即检查”。OFJE 和出演超过 5 人的排除规则保持有效。
+1.0.25 将演员追踪卡片改为紧凑进度条，外层可直接立即检查或收录全部单体作品；新资源至少增大 20% 才替换已有视频，并核验实际下载大小。已有完整目录在来源刷新暂缓时继续处理，入库通知增加本地海报兜底。OFJE、出演超过 5 人和手动跳过规则保持有效；来源验证、缺资源或身份不明仍如实显示。
 
 📦 **[最新 Release 与 Compose 下载](https://github.com/xudong7587/media-index-deploy/releases/latest)** · 🐳 **[latest 镜像入口](https://github.com/users/xudong7587/packages/container/package/media-index?tag=latest)** · 📝 **[更新日志](CHANGELOG.md)**
 
@@ -19,7 +19,7 @@ MediaIndex 是面向个人 NAS 的**自托管网盘媒体自动化中心**：以
 # 最新正式版
 docker pull ghcr.io/xudong7587/media-index:latest
 # 固定到本版
-docker pull ghcr.io/xudong7587/media-index:1.0.24
+docker pull ghcr.io/xudong7587/media-index:1.0.25
 ```
 
 镜像支持 Linux amd64 / arm64，Docker 自动选择对应架构。Release 提供镜像入口和部署文件；镜像通过 Docker 拉取，不是可直接执行的安装包。
