@@ -9,9 +9,9 @@ MediaIndex 是面向个人 NAS 的**自托管网盘媒体自动化中心**：以
 ![Docker](https://img.shields.io/badge/deploy-Docker-2496ed?style=flat-square)
 ![License](https://img.shields.io/badge/license-GPL--3.0-111827?style=flat-square)
 
-本仓库提供 MediaIndex 的公开部署说明与 Docker Compose。使用镜像 `ghcr.io/xudong7587/media-index:latest` 获取最新正式版；需要固定版本时，可改用已发布的镜像版本标签，例如 `1.0.25`。
+本仓库提供 MediaIndex 的公开部署说明与 Docker Compose。使用镜像 `ghcr.io/xudong7587/media-index:latest` 获取最新正式版；需要固定版本时，可改用已发布的镜像版本标签，例如 `1.0.26`。
 
-1.0.25 将演员追踪卡片改为紧凑进度条，外层可直接立即检查或收录全部单体作品；新资源至少增大 20% 才替换已有视频，并核验实际下载大小。已有完整目录在来源刷新暂缓时继续处理，入库通知增加本地海报兜底。OFJE、出演超过 5 人和手动跳过规则保持有效；来源验证、缺资源或身份不明仍如实显示。
+1.0.26 将演员全量追更改为持久顺序队列，同一 115 账号每次只推进一部作品并统一限速、冷却和恢复原任务。普通单体、常规共演和长片自动入库，仅排除明确的大型多人剪辑合集；任务保持各演员独立，展示主任务、步骤、更新时间和子任务进度。少量异常在“订阅与追更 → 待确认”展示海报与简短原因，可直接确认入库／替换或不予入库，详细回执在子任务中查看。发现搜索默认将普通影视结果放在番号演员之前。手动复制只执行复制，手动整理支持片名与年份并按下载分类对应入库；智能追更支持一键归档。
 
 📦 **[最新 Release 与 Compose 下载](https://github.com/xudong7587/media-index-deploy/releases/latest)** · 🐳 **[latest 镜像入口](https://github.com/users/xudong7587/packages/container/package/media-index?tag=latest)** · 📝 **[更新日志](CHANGELOG.md)**
 
@@ -19,7 +19,7 @@ MediaIndex 是面向个人 NAS 的**自托管网盘媒体自动化中心**：以
 # 最新正式版
 docker pull ghcr.io/xudong7587/media-index:latest
 # 固定到本版
-docker pull ghcr.io/xudong7587/media-index:1.0.25
+docker pull ghcr.io/xudong7587/media-index:1.0.26
 ```
 
 镜像支持 Linux amd64 / arm64，Docker 自动选择对应架构。Release 提供镜像入口和部署文件；镜像通过 Docker 拉取，不是可直接执行的安装包。
