@@ -9,9 +9,15 @@ MediaIndex 是面向个人 NAS 的**自托管网盘媒体自动化中心**：以
 ![Docker](https://img.shields.io/badge/deploy-Docker-2496ed?style=flat-square)
 ![License](https://img.shields.io/badge/license-GPL--3.0-111827?style=flat-square)
 
-本仓库提供 MediaIndex 的公开部署说明与 Docker Compose。使用镜像 `ghcr.io/xudong7587/media-index:latest` 获取最新正式版；需要固定版本时，可改用已发布的镜像版本标签，例如 `1.0.26`。
+本仓库提供 MediaIndex 的公开部署说明与 Docker Compose。使用镜像 `ghcr.io/xudong7587/media-index:latest` 获取最新正式版；需要固定版本时，可改用已发布的镜像版本标签，例如 `1.0.27`。
 
-1.0.26 将演员全量追更改为持久顺序队列，同一 115 账号每次只推进一部作品并统一限速、冷却和恢复原任务。普通单体、常规共演和长片自动入库，仅排除明确的大型多人剪辑合集；任务保持各演员独立，展示主任务、步骤、更新时间和子任务进度。少量异常在“订阅与追更 → 待确认”展示海报与简短原因，可直接确认入库／替换或不予入库，详细回执在子任务中查看。发现搜索默认将普通影视结果放在番号演员之前。手动复制只执行复制，手动整理支持片名与年份并按下载分类对应入库；智能追更支持一键归档。
+1.0.27 增加删除演员追踪时的可选资源清理：先预览目录，再确认同步删除；清理中的演员卡片显示实时进度，完成后自动消失。MDC 本地 STRM、NFO 和图片资料更新只确认元数据事件；云下载整理完成后只核对目标作品目录，避免重复增量扫描和重建 STRM。
+
+演员资源清理入口：**订阅与追更 → 演员详情 → 更多设置 → 停止并删除追更**。默认保留文件；勾选“同时删除网盘资源和本地刮削文件”后，先核对目录和文件数量，再确认执行。确认会停止该演员关联追踪和未共享的未完成入库任务；其他演员仍在使用的作品保留。网盘资源进入回收站，本地 STRM、NFO、图片和字幕先写入持久数据目录 `actor-cleanup-trash/<任务 ID>/` 的恢复备份再移除，本地视频及未知文件保留。任务中心可查看回执、继续清理或重新核对范围。
+
+清理卡片每 3 秒读取本地进度，显示网盘目录与本地资料的独立计数；完成后自动移除。失败显示“清理待核对”并保留进度，不冒充删除成功。升级后已打开的网页刷新一次即可加载新卡片。
+
+MDC 的本地映射目录资料更新任务应使用原地模式，云下载整理任务继续使用移动模式。新回调携带具体视频路径时，只处理对应的目标作品目录；旧式无路径回调继续使用已配置范围，明确路径无效时不会扩大扫描。
 
 📦 **[最新 Release 与 Compose 下载](https://github.com/xudong7587/media-index-deploy/releases/latest)** · 🐳 **[latest 镜像入口](https://github.com/users/xudong7587/packages/container/package/media-index?tag=latest)** · 📝 **[更新日志](CHANGELOG.md)**
 
@@ -19,7 +25,7 @@ MediaIndex 是面向个人 NAS 的**自托管网盘媒体自动化中心**：以
 # 最新正式版
 docker pull ghcr.io/xudong7587/media-index:latest
 # 固定到本版
-docker pull ghcr.io/xudong7587/media-index:1.0.26
+docker pull ghcr.io/xudong7587/media-index:1.0.27
 ```
 
 镜像支持 Linux amd64 / arm64，Docker 自动选择对应架构。Release 提供镜像入口和部署文件；镜像通过 Docker 拉取，不是可直接执行的安装包。
