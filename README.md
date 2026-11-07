@@ -9,7 +9,11 @@ MediaIndex 是面向个人 NAS 的**自托管网盘媒体自动化中心**：以
 ![Docker](https://img.shields.io/badge/deploy-Docker-2496ed?style=flat-square)
 ![License](https://img.shields.io/badge/license-GPL--3.0-111827?style=flat-square)
 
-本仓库提供 MediaIndex 的公开部署说明与 Docker Compose。使用镜像 `ghcr.io/xudong7587/media-index:latest` 获取最新正式版；需要固定版本时，可改用已发布的镜像版本标签，例如 `1.0.29`。
+本仓库提供 MediaIndex 的公开部署说明与 Docker Compose。使用镜像 `ghcr.io/xudong7587/media-index:latest` 获取最新正式版；需要固定版本时，可改用已发布的镜像版本标签，例如 `1.1.0`。
+
+1.1.0 修复初次打开和会话过期时的“加载失败：未授权”误报；正常未登录会显示登录窗口，用户名或密码错误、网络和服务故障仍明确提示。
+
+登录窗口后随机展示一张已有缓存的普通影视横版背景，不额外访问远端图源，也不从私人或番号图片中随意抽取。没有可用横图、缓存缺失或图片无法解码时，沿用原有材质背景；图片加载不阻塞登录。登录失败后保留用户名和背景，修正密码即可重试，会话校验与登录限制保持。
 
 1.0.29 修复智能追更在手机上片名、季数与进度挤在一起的问题，并在综艺同日分集变化时重新核验已过期的零覆盖候选，避免旧待核对状态一直漏掉前面的新集。已保存内容、手动跳过、正在执行或需要人工确认的文件操作继续保留原边界。
 
@@ -29,7 +33,7 @@ MDC 的本地映射目录资料更新任务应使用原地模式，云下载整�
 # 最新正式版
 docker pull ghcr.io/xudong7587/media-index:latest
 # 固定到本版
-docker pull ghcr.io/xudong7587/media-index:1.0.29
+docker pull ghcr.io/xudong7587/media-index:1.1.0
 ```
 
 镜像支持 Linux amd64 / arm64，Docker 自动选择对应架构。Release 提供镜像入口和部署文件；镜像通过 Docker 拉取，不是可直接执行的安装包。
