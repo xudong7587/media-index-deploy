@@ -9,7 +9,9 @@ MediaIndex 是面向个人 NAS 的**自托管网盘媒体自动化中心**：以
 ![Docker](https://img.shields.io/badge/deploy-Docker-2496ed?style=flat-square)
 ![License](https://img.shields.io/badge/license-GPL--3.0-111827?style=flat-square)
 
-本仓库提供 MediaIndex 的公开部署说明与 Docker Compose。使用镜像 `ghcr.io/xudong7587/media-index:latest` 获取最新正式版；需要固定版本时，可改用已发布的镜像版本标签，例如 `1.1.0`。
+本仓库提供 MediaIndex 的公开部署说明与 Docker Compose。使用镜像 `ghcr.io/xudong7587/media-index:latest` 获取最新正式版；需要固定版本时，可改用已发布的镜像版本标签，例如 `1.1.1`。
+
+1.1.1 恢复右上角账户菜单中的“退出登录”，手机和桌面均可打开。退出成功后返回登录页；请求失败时保留当前页面并显示可重试的错误。升级后刷新已打开的网页即可加载新入口，无需调整配置或数据库。
 
 1.1.0 修复初次打开和会话过期时的“加载失败：未授权”误报；正常未登录会显示登录窗口，用户名或密码错误、网络和服务故障仍明确提示。
 
@@ -37,7 +39,7 @@ MDC 的云下载整理和原地整理可分别使用两路回调：云下载使�
 # 最新正式版
 docker pull ghcr.io/xudong7587/media-index:latest
 # 固定到本版
-docker pull ghcr.io/xudong7587/media-index:1.1.0
+docker pull ghcr.io/xudong7587/media-index:1.1.1
 ```
 
 镜像支持 Linux amd64 / arm64，Docker 自动选择对应架构。Release 提供镜像入口和部署文件；镜像通过 Docker 拉取，不是可直接执行的安装包。
