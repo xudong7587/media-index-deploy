@@ -9,7 +9,13 @@ MediaIndex 是面向个人 NAS 的**自托管网盘媒体自动化中心**：以
 ![Docker](https://img.shields.io/badge/deploy-Docker-2496ed?style=flat-square)
 ![License](https://img.shields.io/badge/license-GPL--3.0-111827?style=flat-square)
 
-本仓库提供 MediaIndex 的公开部署说明与 Docker Compose。使用镜像 `ghcr.io/xudong7587/media-index:latest` 获取最新正式版；需要固定版本时，可改用已发布的镜像版本标签，例如 `1.1.1`。
+本仓库提供 MediaIndex 的公开部署说明与 Docker Compose。使用镜像 `ghcr.io/xudong7587/media-index:latest` 获取最新正式版；需要固定版本时，可改用已发布的镜像版本标签，例如 `1.1.2`。
+
+1.1.2 改善入库播报与云下载整理：播报正文只保留媒体身份与 TMDB／番号信息，不再附加播放地址、用户或设备详情。缺图时沿用原有两分钟等待窗口，晚到的可信图片可补到同一条尚未外发的通知；Telegram 可直接上传已核验的 JPEG／PNG 缓存，图文失败后的文字回退保留脱敏原因。
+
+剧集播报由真实 Emby 事件绑定对应剧集，发送前有界核对该剧集的实际入库内容，并与本轮完整视频计划及精确云文件／STRM 回执核验。无需等待每集都发回调；完整确认才显示本轮完整范围，部分结果只列已确认季集并提示其余尚未核验。正常窗口两分钟，多集最多聚合十分钟；之后如获得完整证明，可另发一次完成通知，旧消息不重播。字幕、NFO 不计集数，同集多版本按唯一季集统计。
+
+含全角标点的剧集文件名会先安全处理后缀，再交给网盘改名；来源文件身份和原选择顺序保持不变。云下载整理只有在当前视频全部匹配原任务的精确文件回执、且属于同一 TMDB 身份时才继承媒体类型，避免把纪录片剧集按电影重新匹配。继承身份后仍核对规范片名、可信别名与年份，冲突时保留待核对。
 
 1.1.1 恢复右上角账户菜单中的“退出登录”，手机和桌面均可打开。退出成功后返回登录页；请求失败时保留当前页面并显示可重试的错误。升级后刷新已打开的网页即可加载新入口，无需调整配置或数据库。
 
@@ -39,7 +45,7 @@ MDC 的云下载整理和原地整理可分别使用两路回调：云下载使�
 # 最新正式版
 docker pull ghcr.io/xudong7587/media-index:latest
 # 固定到本版
-docker pull ghcr.io/xudong7587/media-index:1.1.1
+docker pull ghcr.io/xudong7587/media-index:1.1.2
 ```
 
 镜像支持 Linux amd64 / arm64，Docker 自动选择对应架构。Release 提供镜像入口和部署文件；镜像通过 Docker 拉取，不是可直接执行的安装包。
