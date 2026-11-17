@@ -9,7 +9,7 @@ MediaIndex 是面向个人 NAS 的**自托管网盘媒体自动化中心**：以
 ![Docker](https://img.shields.io/badge/deploy-Docker-2496ed?style=flat-square)
 ![License](https://img.shields.io/badge/license-GPL--3.0-111827?style=flat-square)
 
-📖 **[使用手册](docs/USAGE.md)** · 🐳 **[Docker Compose](docker-compose.yaml)** · 📦 **[最新发布](https://github.com/xudong7587/media-index-deploy/releases/latest)** · 📝 **[更新日志](CHANGELOG.md)** · 📜 **[免责声明](DISCLAIMER.md)**
+[官方网站](https://dunn.fun/mediaindex/) · 📖 **[使用手册](docs/USAGE.md)** · 🐳 **[Docker Compose](docker-compose.yaml)** · 📦 **[最新发布](https://github.com/xudong7587/media-index-deploy/releases/latest)** · 📝 **[更新日志](CHANGELOG.md)** · 📜 **[免责声明](DISCLAIMER.md)**
 
 ## 特点与优势
 
