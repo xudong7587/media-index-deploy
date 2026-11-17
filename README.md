@@ -114,15 +114,13 @@ Compose 内附带注释形式的 PanSou 服务示例；需要时按文件说明�
 
 ## 更新与备份
 
-更新前保存当前镜像版本，备份 `docker-compose.yaml`、部署环境配置和挂载目录。数据库需要一致性备份时，先停止 MediaIndex，再备份 `./data`；同时按实际使用情况保存 `./strm` 和 `./downloads`。
+将 [upgrade.py](scripts/upgrade.py) 放到现有 Compose 部署目录，在 NAS、Linux 或 macOS 的 Docker 宿主机上运行。需要 Python 3.8 或更新版本和 Docker Compose。 [下载脚本](https://raw.githubusercontent.com/xudong7587/media-index-deploy/main/scripts/upgrade.py)
 
 ```sh
-docker compose pull
-docker compose up -d
-docker compose ps
+python3 upgrade.py
 ```
 
-更新会重建应用容器，持久化目录应继续使用原来的挂载。保留旧镜像和升级前备份，回退时按对应版本恢复；不要只切换镜像就假定数据库可向后兼容。详细步骤见 [使用手册](docs/USAGE.md)，版本变化见 [更新日志](CHANGELOG.md)。
+脚本先生成 SQLite 一致性备份并完成完整性检查，再用目标镜像在隔离副本上验证数据库升级。预检通过后才重建 MediaIndex，数据继续使用原挂载。数据库检查失败时，原容器保留，终端会显示恢复步骤。升级记录及备份说明见 [使用手册](docs/USAGE.md#14-升级备份与恢复)，版本变化见 [更新日志](CHANGELOG.md)。
 
 ## 隐私与免责声明
 
