@@ -366,20 +366,21 @@ Compose 也支持 `PROXY_URL` 与标准代理环境变量；网页保存的同�
 
 ## 14. 升级、备份与恢复
 
-升级前备份 `data`、`strm`、使用中的 `downloads`、Compose 和同级 `.env`。为得到一致的数据库备份，优先停止写入或停止容器后复制，并记录当前镜像版本。导出配置 JSON 只是补充。
+下载 [upgrade.py](../scripts/upgrade.py)，放到现有部署目录，用 Python 3.8 或更新版本运行。请在任务空闲时升级，以便切换服务。图形容器管理器的直接更新需要先完成同样的备份与校验，推荐从 NAS 终端运行脚本。
 
 ```bash
-docker compose pull
-docker compose up -d
-docker compose ps
-docker compose logs --tail=100 media-index
+python3 upgrade.py
 ```
+
+如果原来指定了 Compose 文件或项目名，沿用原参数，例如 `python3 upgrade.py -f docker-compose.yaml -p media-index`。脚本使用正在运行的 MediaIndex 容器读取实际数据库，在 `backups/mediaindex-upgrade/` 内生成经过 `PRAGMA integrity_check` 的独立 SQLite 备份，保留旧镜像，再用新镜像在离线副本上预演数据库初始化。预检通过后只重建 MediaIndex 服务。已运行目标镜像时，脚本保留备份即可退出。备份反映创建时的数据，之后提交的写入会继续保存在现有挂载。完整灾备还应保留 `data`、`strm`、使用中的 `downloads`、Compose 和同级 `.env`。
+
+数据库检查失败时，脚本停止升级。保留原 `data`，停掉所有写入该目录的容器后复制完整目录。存在的数据库、`-wal` 和 `-shm` 文件应来自同一批次。在工作副本上用 `sqlite3 -readonly media_index.db 'PRAGMA integrity_check;'` 检查。优先使用最近一份检查输出为 `ok` 的完整备份恢复。缺少健康备份时，在独立副本上尝试 SQLite `.recover`，再检查完整性、外键和关键任务。 [SQLite 恢复说明](https://www.sqlite.org/recovery.html)
 
 升级后检查登录、网盘连接、历史任务、追更与愿望单，再验证一个既有 STRM 的实际播放。查看 [更新日志](../CHANGELOG.md) 与对应 Release，按版本要求处理兼容事项。
 
 从很早的双容器部署迁移时，使用当前单容器双端口 Compose，保留原持久化目录，移除不再使用的独立播放容器。播放地址变化后需更新 STRM。
 
-回滚前核对旧镜像与当前数据库兼容性，优先使用升级前的完整备份和明确版本镜像。不要只回滚部分数据库文件，也不要用空数据目录伪装恢复成功。
+回滚前核对旧镜像与当前数据库兼容性，优先使用升级前的完整备份和明确版本镜像。使用脚本保留的本地回滚标签时，将 Compose 的镜像设为终端显示的 `mediaindex-upgrade-rollback:…`，再运行 `docker compose up -d --no-deps --no-build --pull never media-index`。恢复数据前先保留当前目录，确保数据库和辅助文件来自同一份备份。
 
 ## 15. 常见问题
 
